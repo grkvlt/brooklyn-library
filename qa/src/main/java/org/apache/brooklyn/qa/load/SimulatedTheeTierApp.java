@@ -18,7 +18,6 @@
  */
 package org.apache.brooklyn.qa.load;
 
-import static org.apache.brooklyn.core.sensor.DependentConfiguration.attributeWhenReady;
 import static org.apache.brooklyn.core.sensor.DependentConfiguration.formatString;
 
 import java.util.Collection;

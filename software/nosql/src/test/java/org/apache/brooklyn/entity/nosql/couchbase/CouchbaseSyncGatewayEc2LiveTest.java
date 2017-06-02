@@ -18,7 +18,6 @@
  */
 package org.apache.brooklyn.entity.nosql.couchbase;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.brooklyn.api.entity.EntitySpec;

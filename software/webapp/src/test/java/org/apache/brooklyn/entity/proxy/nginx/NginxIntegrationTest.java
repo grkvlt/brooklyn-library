@@ -18,13 +18,11 @@
  */
 package org.apache.brooklyn.entity.proxy.nginx;
 
-import static org.apache.brooklyn.test.HttpTestUtils.assertHttpStatusCodeEquals;
-import static org.apache.brooklyn.test.HttpTestUtils.assertHttpStatusCodeEventuallyEquals;
+import static org.apache.brooklyn.util.http.HttpAsserts.assertHttpStatusCodeEquals;
+import static org.apache.brooklyn.util.http.HttpAsserts.assertHttpStatusCodeEventuallyEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.util.Map;
 
 import org.apache.brooklyn.api.entity.Entity;
 import org.apache.brooklyn.api.entity.EntitySpec;
@@ -38,9 +36,9 @@ import org.apache.brooklyn.entity.webapp.JavaWebAppService;
 import org.apache.brooklyn.entity.webapp.WebAppService;
 import org.apache.brooklyn.entity.webapp.jboss.JBoss7Server;
 import org.apache.brooklyn.test.Asserts;
-import org.apache.brooklyn.test.HttpTestUtils;
 import org.apache.brooklyn.test.WebAppMonitor;
 import org.apache.brooklyn.test.support.TestResourceUnavailableException;
+import org.apache.brooklyn.util.http.HttpTool;
 import org.apache.brooklyn.util.time.Duration;
 import org.apache.brooklyn.util.time.Time;
 import org.slf4j.Logger;
@@ -367,7 +365,7 @@ public class NginxIntegrationTest extends BrooklynAppLiveTestSupport {
                 while (true) {
                     try {
                         num++;
-                        int code = HttpTestUtils.getHttpStatusCode(nginxUrl);
+                        int code = HttpTool.getHttpStatusCode(nginxUrl);
                         if (code!=200) log.info("NGINX GOT: "+code);
                         else log.debug("NGINX GOT: "+code);
                         if (System.currentTimeMillis()>=lastReportTime+1000) {
@@ -381,7 +379,7 @@ public class NginxIntegrationTest extends BrooklynAppLiveTestSupport {
                 }
             }});
         t.start();
-        
+
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -390,7 +388,7 @@ public class NginxIntegrationTest extends BrooklynAppLiveTestSupport {
                 while (true) {
                     try {
                         num++;
-                        int code = HttpTestUtils.getHttpStatusCode(jbossUrl);
+                        int code = HttpTool.getHttpStatusCode(jbossUrl);
                         if (code!=200) log.info("JBOSS GOT: "+code);
                         else log.debug("JBOSS GOT: "+code);
                         if (System.currentTimeMillis()>=1000+lastReportTime) {
